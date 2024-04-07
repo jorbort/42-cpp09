@@ -2,20 +2,23 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <iostream>
-# include <string>
+#include <map>
+#include <string>
 
 class BitcoinExchange
 {
-
+	private:
+	std::map<std::string, float> dataBase;
+	std::string inputFile;
 	public:
 
 		BitcoinExchange();
 		BitcoinExchange( BitcoinExchange const & src );
 		~BitcoinExchange();
-
 		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
 
-	private:
+		  void getInput(std::string argv);
+
 
 };
 
