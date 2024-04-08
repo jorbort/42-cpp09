@@ -6,39 +6,28 @@
 
 BitcoinExchange::BitcoinExchange()
 {
+    this->parseDataBase();
 }
 
-BitcoinExchange::BitcoinExchange( const BitcoinExchange & src )
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &src)
 {
+    this->dataBase = src.dataBase;
 }
-
 
 /*
 ** -------------------------------- DESTRUCTOR --------------------------------
 */
 
-BitcoinExchange::~BitcoinExchange()
-{
-}
-
+BitcoinExchange::~BitcoinExchange() {}
 
 /*
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-BitcoinExchange &				BitcoinExchange::operator=( BitcoinExchange const & rhs )
+BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 {
-	//if ( this != &rhs )
-	//{
-		//this->_value = rhs.getValue();
-	//}
-	return *this;
-}
-
-std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i )
-{
-	//o << "Value = " << i.getValue();
-	return o;
+    *this = rhs;
+    return *this;
 }
 
 
@@ -46,10 +35,13 @@ std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i )
 ** --------------------------------- METHODS ----------------------------------
 */
 
+void BitcoinExchange::checkDates(std::string &path)
+{
+
+}
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
-
 
 /* ************************************************************************** */

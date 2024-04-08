@@ -1,27 +1,29 @@
-#ifndef BITCOINEXCHANGE_HPP
-# define BITCOINEXCHANGE_HPP
+#pragma once
 
-# include <iostream>
+
+#include <exception>
 #include <map>
 #include <string>
 
-class BitcoinExchange
-{
-	private:
-	std::map<std::string, float> dataBase;
-	std::string inputFile;
-	public:
+class BitcoinExchange {
+private:
+  std::map<std::string, float> dataBase;
 
-		BitcoinExchange();
-		BitcoinExchange( BitcoinExchange const & src );
-		~BitcoinExchange();
-		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
+public:
+  BitcoinExchange();
+  BitcoinExchange(BitcoinExchange const &src);
+  ~BitcoinExchange();
+  BitcoinExchange &operator=(BitcoinExchange const &rhs);
 
-		  void getInput(std::string argv);
+  void checkDates(std::string &inputPath);
+
+  protected:
+    void parseDataBase(void);
 
 
+
+  class InvalidDateException : public std::exception
+  {
+      virtual const char *what() const throw();
+  };
 };
-
-std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i );
-
-#endif /* ************************************************* BITCOINEXCHANGE_H */
