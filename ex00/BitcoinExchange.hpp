@@ -26,4 +26,24 @@ public:
   {
       virtual const char *what() const throw();
   };
+  class InvalidFilePath : public std::exception
+  {
+    virtual const char *what() const throw();
+  };
+  class notApositiveNumber : public std::exception
+  {
+      virtual const char *what() const throw();
+  };
+  class toLargeException : public std::exception
+  {
+    virtual const char *what() const throw();
+  };
+  class BadInput : public std::exception
+  {
+    virtual const char * what(std::string) const throw();
+  };
+  class BadFormat : public std::exception
+  {
+      virtual const char * what() const throw();
+  };
 };
