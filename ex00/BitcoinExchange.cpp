@@ -51,7 +51,9 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 void BitcoinExchange::parseDataBase()
 {
     std::ifstream dbFile;
-    std::string line = "";
+    std::string date = "";
+	std::string line = "";
+	float value = 0.0;
     bool firstLine = true;
     dbFile.open("/Users/jbortolo/Desktop/42-cpp09/ex00/data.csv", std::ifstream::in);
     if (!dbFile.is_open())
@@ -63,8 +65,16 @@ void BitcoinExchange::parseDataBase()
         {
             if (line != "date,exchange_rate")
                 throw BadFormat();
+			firstLine = false;
         }
+		else 
+		{
+			date = line.substr(0, line.find(","));
+			value = atof(line.substr(line.find(",")+1 ,line.length()).c_str());
+			dataBase.insert(std::make_pair(date,value));
+		}
     }
+	dbFile.close();
 }
 
 void BitcoinExchange::checkDates(std::string &path)
