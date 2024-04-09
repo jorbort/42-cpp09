@@ -1,4 +1,5 @@
 #include "BitcoinExchange.hpp"
+#include <cstdlib>
 #include <exception>
 #include <fstream>
 #include <iostream>
@@ -39,7 +40,8 @@ BitcoinExchange::~BitcoinExchange()
 
 BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 {
-    *this = rhs;
+    (void )rhs;
+    //*this = rhs;
     return *this;
 }
 
@@ -67,7 +69,7 @@ void BitcoinExchange::parseDataBase()
                 throw BadFormat();
 			firstLine = false;
         }
-		else 
+        else
 		{
 			date = line.substr(0, line.find(","));
 			value = atof(line.substr(line.find(",")+1 ,line.length()).c_str());
@@ -77,13 +79,72 @@ void BitcoinExchange::parseDataBase()
 	dbFile.close();
 }
 
-void BitcoinExchange::checkDates(std::string &path)
+void BitcoinExchange::checkInput(std::string &path)
 {
     std::ifstream inFile;
+    std::string line = "";
+    std::string date = "";
+    bool firstLine = true;
+    std::string  value = "";
     inFile.open(path.c_str(), std::ifstream::in);
     if (!inFile.is_open())
         throw InvalidFilePath();
+    while (!inFile.eof())
+    {
+        getline(inFile, line);
+        if (firstLine == true)
+        {
+            if (line != "date | value")
+                throw BadFormat();
+            firstLine = false;
+        }
+        else
+        {
+            if (line.find("|") == line.npos || line.empty() || line.find("|") != 11)
+            {
+                std::cout << "Error: invalid format" << std::endl;
+            }
+            else
+            {
+                if (line[0] != '\n')
+                {
+                    date = line.substr(0, line.find("|") -1);
+                    if(!::BitcoinExchange::checkDate(date))
+                    {
+                        std::cout << "Error: invalid format" << std::endl;
+                        continue;
+                    }
 
+                    value = line.substr(line.find("|") + 2, line.length());
+                    // if (!::BitcoinExchange::checkValue(value))
+                    // {
+                    //     std::cerr << "Error: invalid format" <<std::endl;
+                    //     continue ;
+                    // }
+                    //std::cout << value << std::endl;
+                }
+            }
+        }
+    }
+}
+
+bool BitcoinExchange::checkDate(std::string date)
+{
+    std::string year = "";
+    std::string month = "";
+    std::string day = "";
+
+   year = date.substr(0, date.find("-"));
+   if (year.length() != 4)
+   {
+       return false;
+   }
+   month = date.substr(date.find("-") + 1, date.find("-") -2);
+   //std::cout << month <<std::endl;
+   day = date.substr(date.rfind("-") + 1,date.rfind("-") +2);
+   std::cout << day << std::endl;
+
+   return (true);
 }
 
 /*
@@ -107,11 +168,9 @@ const char *BitcoinExchange::notApositiveNumber::what() const throw()
 {
     return ("Error: not a positive number");
 }
-const char *BitcoinExchange::BadInput::what(std::string input) const throw()
+const char *BitcoinExchange::BadInput::what() const throw()
 {
-    std::string err = "Error bad input => " + input;
-    const char *ret = err.c_str();
-    return (ret);
+    return ("Error : bad input ");
 }
 
 const char *BitcoinExchange::BadFormat::what() const throw()

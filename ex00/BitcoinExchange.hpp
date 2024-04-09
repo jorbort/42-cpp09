@@ -7,7 +7,7 @@
 
 class BitcoinExchange {
 private:
-  std::map<std::string, float> dataBase;
+  std::map<std::string , float > dataBase;
 
 public:
   BitcoinExchange();
@@ -15,8 +15,13 @@ public:
   ~BitcoinExchange();
   BitcoinExchange &operator=(BitcoinExchange const &rhs);
 
-  void checkDates(std::string &inputPath);
+  void checkInput(std::string &inputPath);
 
+  static bool checkDate(std::string date);
+  static bool checkValue(std::string value);
+
+  void printDate(std::string day);
+  void printValue(float amount);
   protected:
     void parseDataBase(void);
 
@@ -40,7 +45,7 @@ public:
   };
   class BadInput : public std::exception
   {
-    virtual const char * what(std::string) const throw();
+    virtual const char *what() const throw();
   };
   class BadFormat : public std::exception
   {
