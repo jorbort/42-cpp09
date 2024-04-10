@@ -19,6 +19,7 @@ public:
 
   static bool checkDate(std::string date);
   static bool checkValue(std::string value);
+  static bool checkDay(int day, int month);
 
   void printDate(std::string day);
   void printValue(float amount);

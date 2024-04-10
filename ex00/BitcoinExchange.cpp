@@ -57,9 +57,11 @@ void BitcoinExchange::parseDataBase()
 	std::string line = "";
 	float value = 0.0;
     bool firstLine = true;
-    dbFile.open("/Users/jbortolo/Desktop/42-cpp09/ex00/data.csv", std::ifstream::in);
+    dbFile.open("/home/jorge/Desktop/42-cpp09/ex00/data.csv", std::ifstream::in);
     if (!dbFile.is_open())
-        throw InvalidFilePath();
+    {
+		 throw InvalidFilePath();
+	}
     while (!dbFile.eof())
     {
         getline(dbFile, line);
@@ -114,13 +116,14 @@ void BitcoinExchange::checkInput(std::string &path)
                         std::cout << "Error: invalid format" << std::endl;
                         continue;
                     }
-
+					//std::cout << date << " | ";
                     value = line.substr(line.find("|") + 2, line.length());
-                    // if (!::BitcoinExchange::checkValue(value))
-                    // {
-                    //     std::cerr << "Error: invalid format" <<std::endl;
-                    //     continue ;
-                    // }
+					//std::cout << value << std::endl;
+                    if (!::BitcoinExchange::checkValue(value))
+                    {
+                        std::cerr << "Error: invalid format" <<std::endl;
+                        continue ;
+                    }
                     //std::cout << value << std::endl;
                 }
             }
@@ -133,18 +136,46 @@ bool BitcoinExchange::checkDate(std::string date)
     std::string year = "";
     std::string month = "";
     std::string day = "";
-
    year = date.substr(0, date.find("-"));
    if (year.length() != 4)
    {
        return false;
    }
-   month = date.substr(date.find("-") + 1, date.find("-") -2);
-   //std::cout << month <<std::endl;
-   day = date.substr(date.rfind("-") + 1,date.rfind("-") +2);
-   std::cout << day << std::endl;
 
+   month = date.substr(date.find("-") + 1, date.find("-") -2);
+	int checkMonth = std::atoi(month.c_str());
+	if (month.length() != 2 || checkMonth <= 0 || checkMonth > 12)
+		return (false);
+   day = date.substr(date.rfind("-") + 1,date.rfind("-") +2);
+   int checkDay = std::atoi(day.c_str());
+   if (day.length() != 2 ||  !::BitcoinExchange::checkDay(checkDay, checkMonth))
+	return (false);
    return (true);
+}
+
+bool BitcoinExchange::checkDay(int day , int month)
+{
+	if (day <= 0)
+		return (false);
+	if (month == 2 && day > 28)
+		return (false);
+	if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
+		return (false);
+	else if (day > 31)
+		return (false);
+	return (true);
+	
+}
+
+bool BitcoinExchange::checkValue(std::string value)
+{
+	if (value.length() > 4)
+		return (false);
+	float checkValue = std::atof(value.c_str());
+	std::cout << checkValue << std::endl;
+	if (checkValue > 1000.0 || checkValue < 0.0)
+		return (false);
+	return (true);
 }
 
 /*
