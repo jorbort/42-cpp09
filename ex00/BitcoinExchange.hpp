@@ -28,8 +28,6 @@ public:
   protected:
     void parseDataBase(void);
 
-
-
   class InvalidDateException : public std::exception
   {
       virtual const char *what() const throw();

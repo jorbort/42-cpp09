@@ -42,7 +42,6 @@ BitcoinExchange::~BitcoinExchange()
 BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 {
     (void )rhs;
-    //*this = rhs;
     return *this;
 }
 
