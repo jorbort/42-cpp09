@@ -7,7 +7,8 @@
 
 class BitcoinExchange {
 private:
-  std::map<std::string , float > dataBase;
+  std::map<std::string , float> dataBase;
+  std::string badInput;
 
 public:
   BitcoinExchange();
@@ -17,12 +18,13 @@ public:
 
   void checkInput(std::string &inputPath);
 
-  static bool checkDate(std::string date);
-  static bool checkValue(std::string value);
-  static bool checkDay(int day, int month);
+   void checkDate(std::string date);
+   void checkValue(std::string value);
+   void checkDay(int day, int month);
+   void formatedPrint(std::string date, float value);
 
-  void printDate(std::string day);
-  void printValue(float amount);
+  void setBadInput(std::string input);
+  void getBadInput();
   protected:
     void parseDataBase(void);
 
@@ -40,7 +42,7 @@ public:
   {
       virtual const char *what() const throw();
   };
-  class toLargeException : public std::exception
+  class tooLargeException : public std::exception
   {
     virtual const char *what() const throw();
   };
