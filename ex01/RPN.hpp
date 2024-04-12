@@ -1,3 +1,4 @@
+#include <exception>
 #include <stack>
 
 class RPN
@@ -11,5 +12,15 @@ class RPN
         ~RPN();
 
         void parseInput(std::string &input);
-        void solveCalculation(void);
+        void solveCalculation(char operand);
+        bool is_operand(char c);
+
+        class invalidOperation : public std::exception
+        {
+            const char *what() const throw();
+        };
+        class invalidArgument : public std::exception
+        {
+          const char* what() const throw();
+        };
 };

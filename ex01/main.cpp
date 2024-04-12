@@ -7,7 +7,14 @@ int main(int argc, char **argv)
     {
         std::string arguments = argv[1];
         RPN polish;
-        polish.parseInput(arguments);
+        try
+        {
+            polish.parseInput(arguments);
+        }
+        catch (std::exception & e)
+        {
+            std::cout << e.what() << std::endl;
+        }
     }
     else
     {
