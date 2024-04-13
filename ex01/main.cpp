@@ -15,6 +15,7 @@ int main(int argc, char **argv)
         {
             std::cout << e.what() << std::endl;
         }
+        polish.printResult();
     }
     else
     {

@@ -39,14 +39,45 @@ void RPN::parseInput(std::string &input)
         }
         else if (is_operand(*it))
         {
+            if (*it == '-')
+            {
+                ++it;
+                if (is_operand(*it))
+                {
+                    int n = operation.top() * -1;
+                    operation.pop();
+                    operation.push(n);
+                    try
+                    {
+                        solveCalculation(*it);
+                    }
+                    catch(std::exception &e)
+                    {
+                        std::cout << e.what() << std::endl;
+                        break;
+                    }
+                    continue;
+                }
+                else
+                {
+                    --it;
+                }
+            }
             if (digit < 2 && operand == false)
             {
                  throw invalidOperation();
             }
             else
             {
-               //operation.push(*it);
-               solveCalculation(*it);
+                try
+                {
+                    solveCalculation(*it);
+                }
+                catch(std::exception &e)
+                {
+                    std::cout << e.what() << std::endl;
+                    break;
+                }
                operand = true;
                digit = 0;
             }
@@ -58,7 +89,58 @@ void RPN::parseInput(std::string &input)
         else
             throw invalidArgument();
     }
-    std::cout << (char)operation.top() <<std::endl;
+}
+
+void RPN::solveCalculation(int operand)
+{
+    int a = 0;
+    int b = 0;
+    switch (operand)
+    {
+        case 42 :
+        {
+            a = operation.top();
+            operation.pop();
+            b = operation.top();
+            operation.pop();
+            operation.push(b * a);
+            break ;
+        }
+        case 47 :
+        {
+            a = operation.top();
+            operation.pop();
+            b = operation.top();
+            operation.pop();
+            if (a == 0 || b == 0)
+                throw invalidDivition();
+            operation.push(b / a);
+            break;
+        }
+        case 45 :
+        {
+            a = operation.top();
+            operation.pop();
+            b = operation.top();
+            operation.pop();
+            operation.push(b - a);
+            break ;
+        }
+        case 43:
+        {
+            a = operation.top();
+            operation.pop();
+            b = operation.top();
+            operation.pop();
+            operation.push(b + a);
+            break;
+        }
+    }
+}
+
+void RPN::printResult(void)
+{
+    std::cout << operation.top() << std::endl;
 }
 
 bool RPN::is_operand(char c)
@@ -78,4 +160,8 @@ const char* RPN::invalidOperation::what() const throw()
 const char* RPN::invalidArgument::what() const throw()
 {
     return ("Error: invalid argument detected");
+}
+const char *RPN::invalidDivition::what() const throw()
+{
+    return ("Error cannot divide by 0");
 }

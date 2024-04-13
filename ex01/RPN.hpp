@@ -12,15 +12,20 @@ class RPN
         ~RPN();
 
         void parseInput(std::string &input);
-        void solveCalculation(char operand);
+        void solveCalculation(int operand);
         bool is_operand(char c);
+        void printResult(void);
 
         class invalidOperation : public std::exception
         {
-            const char *what() const throw();
+          virtual  const char *what() const throw();
         };
         class invalidArgument : public std::exception
         {
-          const char* what() const throw();
+         virtual const char* what() const throw();
+        };
+        class invalidDivition : public std::exception
+        {
+            virtual const char * what() const throw();
         };
 };
