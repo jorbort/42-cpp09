@@ -27,14 +27,11 @@ int main(int argc, char **argv)
     }
     try
     {
-        std::clock_t beginVec = std::clock();
-        FJ.sortVec();
-        std::clock_t endVec = std::clock();
-
-        std::clock_t beginDeq = std::clock();
-        FJ.sortDeq();
-        std::clock_t enddeq = std::clock();
+        FJ.sort(argc);
     }
-    // FJ.printDeq();
-    //FJ.printVec();
+    catch(std::exception &e)
+    {
+        std::cout << e.what();
+    }
+    return (0);
 }
