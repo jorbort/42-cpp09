@@ -1,5 +1,5 @@
 NAME = RPN
-CFLAG = -Wall -Werror -Wextra -g -std=c++98 -fsanitize=address
+CFLAG = -Wall -Werror -Wextra -g -std=c++98 ##-fsanitize=address
 SRC = main.cpp RPN.cpp
 CC = c++
 OBJS = $(SRC:.cpp=.o)

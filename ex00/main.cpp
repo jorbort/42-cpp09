@@ -12,10 +12,10 @@ int main(int argc, char **argv)
         std::cerr << "invalid number of arguments" << std::endl;
         return (1);
     }
-    BitcoinExchange exchange;
     std::string arg = argv[1];
    try
    {
+       BitcoinExchange exchange;
        exchange.checkInput(arg);
    }
    catch(std::exception &e)

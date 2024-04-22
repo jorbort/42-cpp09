@@ -32,6 +32,8 @@ void RPN::parseInput(std::string &input)
 
     for (;it != input.end(); it++)
     {
+        if (it == input.end())
+            return ;
         if (isdigit(*it))
         {
             operation.push(*it - '0');
@@ -95,6 +97,8 @@ void RPN::solveCalculation(int operand)
 {
     int a = 0;
     int b = 0;
+    if (operation.size() < 2 )
+        return ;
     switch (operand)
     {
         case 42 :
@@ -140,6 +144,8 @@ void RPN::solveCalculation(int operand)
 
 void RPN::printResult(void)
 {
+    if (operation.size() > 1)
+        throw invalidOperation();
     std::cout << operation.top() << std::endl;
 }
 

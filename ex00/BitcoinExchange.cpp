@@ -17,7 +17,7 @@ BitcoinExchange::BitcoinExchange()
     }
     catch (std::exception &e)
     {
-        std::cerr << "Error: " << e.what() << std::endl;
+        throw InvalidFilePath();
     }
 }
 
@@ -57,7 +57,7 @@ void BitcoinExchange::parseDataBase()
 	std::string line = "";
 	float value = 0.0;
     bool firstLine = true;
-    dbFile.open("/Users/jbortolo/Desktop/42-cpp09/ex00/data.csv", std::ifstream::in);
+    dbFile.open("data.csv", std::ifstream::in);
     if (!dbFile.is_open())
     {
 		 throw InvalidFilePath();
